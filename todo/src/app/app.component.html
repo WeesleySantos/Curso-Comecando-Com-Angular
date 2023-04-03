@@ -1,0 +1,31 @@
+<h1 class="title animate__animated animate__jackInTheBox">{{title}}</h1>
+<ul class="animate__animated animate__flipInX" *ngIf="mode=='list'">
+    <p *ngIf="todos.length==0"><small>Não tem nenhuma tarefa hoje!</small></p>
+    <li *ngFor="let todo of todos">
+        {{todo.title}} |
+        <button (click)="remove(todo)"><i class="far fa-trash-alt"></i></button>
+        <button *ngIf="!todo.done" (click)="markAsDone(todo)"><i class="far fa-check-circle"></i></button> |
+        <button *ngIf="todo.done" (click)="markAsUndone(todo)"><i class="fas fa-check-circle"></i></button> |
+    </li>
+</ul>
+
+<div id="modal" *ngIf="mode=='add'" class="animate__animated animate__flipInX">
+    <form [formGroup]="form">
+        <fieldset>
+            <label>Tarefa</label>
+            <input type="text" placeholder="Título da Tarefa" maxlength="60" formControlName="title">
+            <p class="text-center">
+                <button class="button" [disabled]="form.invalid" (click)="add()"><i class="far fa-save"></i>
+                    Salvar</button>
+            </p>
+        </fieldset>
+    </form>
+</div>
+<button class="add-button animate__animated animate__fadeInUp button" (click)="changeMode('add')" *ngIf="mode=='list'">
+    <i class="fas fa-plus-circle"></i>
+    NOVA TAREFA
+</button>
+<button class="add-button animate__animated animate__fadeInUp button" (click)="changeMode('list')" *ngIf="mode=='add'">
+    <i class="fas fa-times"></i>
+    CANCELAR
+</button>
